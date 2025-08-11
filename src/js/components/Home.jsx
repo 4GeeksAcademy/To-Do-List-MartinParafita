@@ -1,26 +1,46 @@
-import React from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
+import React, { useState } from "react";
 //create your first component
 const Home = () => {
+	const [inputValue, setInputValue] = useState("")
+	const [todoList, setTodoList] = useState([])
+	const [done, setDone] = useState(false)
 	return (
-		<div className="text-center">
-            
-
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div className="container bg-light">
+			<h1>To Do List</h1>
+			<ul>
+				<li >
+					
+					<input 
+					type="text"
+					onChange={e => setInputValue(e.target.value)}
+					value={inputValue}
+					onKeyDown={(e) => {
+						if(e.key === "Enter") {
+							setTodoList(todoList.concat(inputValue))
+							setInputValue("")
+						}
+					}} placeholder="New Task.."></input>
+				</li>
+				{todoList.map((t, index) => (
+					<li key={index} className="d-flex justify-content-between align-items-center mb-2">
+						<div>
+							<input 
+							type="checkbox" 
+							className="me-3"
+							checked={done}
+							onChange={() => setDone(!done)} />
+							<span style={{textDecoration: done ? 'line-through' : 'none'}}>
+								{t}
+							</span>
+						</div>
+						<button 
+						className="btn btn-danger btn-sm float-end"
+						onClick={() => setTodoList(prev => prev.filter((_, i) => i !== index))}>
+							Delete
+						</button>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 };
