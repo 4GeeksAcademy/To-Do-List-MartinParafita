@@ -9,3 +9,10 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+.delete {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.tarea:hover .delete{
+    opacity: 1;
+}
