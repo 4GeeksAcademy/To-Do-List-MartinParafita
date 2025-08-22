@@ -22,31 +22,29 @@ const Home = () => {
 							value={inputValue}                                       
 							onKeyDown={ async (e) => {
 								if(e.key === "Enter") {
-									setTodoList(todoList.concat(inputValue))
-									addTask(userName,inputValue)
+									const text = inputValue.trim();
+									if(!text) return;
+									const created = await addTask(userName, text);
+									setTodoList(prev => [...prev, created]);
 									setInputValue("")
-								}
+								};
 							}} placeholder="New Task..">
 						</input> 
 					</li>
 					{todoList.map((t) => {
-						console.log(t)
 						return(
 						<li  key={t.id} className=" tarea d-flex justify-content-between align-items-center my-2 rounded border">
 							<div>
 								<input
 									type="checkbox" 
 									className="m-2"
-									checked={t.done}/>
-								<span>
-									{t.label}
-								</span>
+									checked={t.is_done}/>
+								<span>{t.label}</span>
 							</div>
 							<button 
 								className="delete btn btn-danger btn-sm float-end"
-								onClick={() => {
+								onClick={async () => {
 									removeTask(t.id, userName, setTodoList);
-									//setTodoList(prev => prev.filter((_, i) => i !== index));
 								}}>
 								X
 							</button>
