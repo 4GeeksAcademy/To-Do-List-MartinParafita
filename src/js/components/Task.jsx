@@ -4,7 +4,7 @@ const InputTask = ({onToggle, done, remove}) => {
     const [ inputValue, setInputValue ] = useState('');
 
     const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+        if (event.key === 'Enter') {
         
     }}
 

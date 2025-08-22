@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Task from "./Task"
 
 const List = () => {
-    const [listaTareas, setListaTareas] = useState([])
+    const [todoList, setTodoList] = useState([])
 };
 
 return(
