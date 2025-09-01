@@ -4,19 +4,25 @@
 export const addUser = async (userName) => {
     try {
         // declarar metodo POST
-        const responseData = await fetch(`${URL_BASE}/users/${userName}`, {
+        const requestOptions = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            } 
-        });
+                "Content-Type": "application/json"} 
+            }
+        const responseData = await fetch(`${URL_BASE}/users/${userName}`);
+        if(responseData.ok) {
+            const json = await responseData.json();
+            return json;    
+        }
         // poner en una variable la respuesta del servido en formato json
-        const json = await responseData.json();
-        if(!responseData.ok){
-            console.error(json);
-            throw new Error(json);
-        };
-        return json;
+        
+        if(responseData.status === 404){
+            const create = await fetch(`${URL_BASE}/users/${userName}`, requestOptions);
+            const json = await create.json();
+            if(!create.ok){
+                throw new Error(`Error ${create.status}`)
+            }};
+        return [];
     } catch (err) {
         console.error(`Lo siento, hubo un error ${err}`)   
     };
